@@ -16,8 +16,7 @@ import AddCity from './pages/AddCity';
 import AddUniversity from './pages/AddUniversity';
 
 function App() {
-  const [userData, setUserData] = useState({});
-  const user = true;
+  const [user, setUser] = useState(null);
 
   const theme = createTheme({
     palette: {
@@ -39,20 +38,20 @@ function App() {
             <Nav user={user} />
           </Route>
           <Route exact path="/">
-            <Home {...userData} />
+            <Home {...user} />
           </Route>
           <MemberProtectedRoute
             user={user}
             exact
             component={SignIn}
-            handleFetch={setUserData}
+            handleFetch={setUser}
             path="/sign-in"
           />
           <MemberProtectedRoute
             user={user}
             exact
             component={SignUp}
-            handleFetch={setUserData}
+            handleFetch={setUser}
             path="/sign-up"
           />
           <GuestProtectedRoute
