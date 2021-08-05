@@ -1,6 +1,6 @@
 import { Typography } from '@material-ui/core';
 
-const Home = userData => {
+const Home = () => {
   return <Typography>Hello World</Typography>;
 };
 export default Home;

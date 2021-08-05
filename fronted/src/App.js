@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Nav from './components/Nav';
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
-import Home from './components/Home';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import Home from './pages/Home';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {
   Container,
-  createTheme,
+  unstable_createMuiStrictModeTheme as createTheme,
   CssBaseline,
   ThemeProvider,
 } from '@material-ui/core';
