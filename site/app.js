@@ -18,6 +18,9 @@ const passport = require("passport");
 const User = require("./models/user");
 const Hobby = require("./models/hobby");
 
+const City = require("./models/city");
+const University = require("./models/university");
+
 const initPassport = require("./util/passport-config");
 initPassport(passport);
 
@@ -67,6 +70,9 @@ app.use(userRouter);
 
 Hobby.belongsTo(User);
 User.hasMany(Hobby);
+
+University.belongsTo(City);
+City.hasMany(University);
 
 db.sync()
   .then(() => {
