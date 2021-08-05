@@ -12,6 +12,7 @@ import {
   useTheme,
   IconButton,
 } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import logoPhoto from '../assets/imgs/logo.png';
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
@@ -47,7 +48,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ButtonAppBar = () => {
+const ButtonAppBar = ({ user }) => {
   const classes = useStyles();
 
   const theme = useTheme();
@@ -62,33 +63,43 @@ const ButtonAppBar = () => {
     if (text === 'Home') return '/';
     if (text === 'About') return '/about';
     if (text === 'Sign Up') return '/sign-up';
+    if (text === 'Add City') return '/add-city';
+    if (text === 'Add University') return '/add-university';
     return '/sign-in';
   };
 
   const container =
     window !== undefined ? () => window.document.body : undefined;
 
-  const drawer = (
-    <div>
-      <div className={classes.toolbar} />
-      <List>
-        {['Home', 'About', 'Sign In', 'Sign Up'].map(text => (
-          <NavLink
-            key={text}
-            exact
-            activeClassName={classes.activeLink}
-            className={classes.link}
-            to={properPath(text)}
-            onClick={handleDrawerToggle}
-          >
-            <ListItem button>
-              <ListItemText primary={text} />
-            </ListItem>
-          </NavLink>
-        ))}
-      </List>
-    </div>
-  );
+  const drawer = () => {
+    let linksArray;
+    if (user) {
+      linksArray = ['Home', 'About', 'Add City', 'Add University'];
+    } else {
+      linksArray = ['Home', 'About', 'Sign In', 'Sign Up'];
+    }
+    return (
+      <div>
+        <div className={classes.toolbar} />
+        <List>
+          {linksArray.map(text => (
+            <NavLink
+              key={text}
+              exact
+              activeClassName={classes.activeLink}
+              className={classes.link}
+              to={properPath(text)}
+              onClick={handleDrawerToggle}
+            >
+              <ListItem button>
+                <ListItemText primary={text} />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+      </div>
+    );
+  };
 
   return (
     <div>
@@ -126,16 +137,43 @@ const ButtonAppBar = () => {
                   >
                     About
                   </NavLink>
-                  <Link className={classes.link} to="/sign-in">
-                    <Button size="small" color="inherit">
-                      Login
-                    </Button>
-                  </Link>
-                  <Link className={classes.link} to="/sign-up">
-                    <Button size="small" color="primary" variant="contained">
-                      Sign Up
-                    </Button>
-                  </Link>
+                  {user ? (
+                    <>
+                      <NavLink
+                        className={classes.link}
+                        to="/add-city"
+                        exact
+                        activeClassName={classes.activeLink}
+                      >
+                        Add City
+                      </NavLink>
+                      <NavLink
+                        className={classes.link}
+                        to="/add-university"
+                        exact
+                        activeClassName={classes.activeLink}
+                      >
+                        Add University
+                      </NavLink>
+                    </>
+                  ) : (
+                    <>
+                      <Link className={classes.link} to="/sign-in">
+                        <Button size="small" color="inherit">
+                          Login
+                        </Button>
+                      </Link>
+                      <Link className={classes.link} to="/sign-up">
+                        <Button
+                          size="small"
+                          color="primary"
+                          variant="contained"
+                        >
+                          Sign Up
+                        </Button>
+                      </Link>
+                    </>
+                  )}
                 </Grid>
               </Hidden>
               <IconButton
@@ -166,12 +204,16 @@ const ButtonAppBar = () => {
               keepMounted: true,
             }}
           >
-            {drawer}
+            {drawer()}
           </Drawer>
         </Hidden>
       </nav>
     </div>
   );
+};
+
+ButtonAppBar.propTypes = {
+  user: PropTypes.bool.isRequired,
 };
 
 export default ButtonAppBar;
