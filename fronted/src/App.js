@@ -10,9 +10,11 @@ import {
   CssBaseline,
   ThemeProvider,
 } from '@material-ui/core';
+import MemberProtectedRoute from './protectedRoutes/MemberProtectedRoute';
 
 function App() {
   const [userData, setUserData] = useState({});
+  const user = false;
 
   const theme = createTheme({
     palette: {
@@ -34,12 +36,20 @@ function App() {
           <Route exact path="/">
             <Home {...userData} />
           </Route>
-          <Route path="/sign-in">
-            <SignIn handleFetch={setUserData} />
-          </Route>
-          <Route path="/sign-up">
-            <SignUp handleFetch={setUserData} />
-          </Route>
+          <MemberProtectedRoute
+            user={user}
+            exact
+            component={SignIn}
+            handleFetch={setUserData}
+            path="/sign-in"
+          />
+          <MemberProtectedRoute
+            user={user}
+            exact
+            component={SignUp}
+            handleFetch={setUserData}
+            path="/sign-up"
+          />
         </Router>
       </Container>
     </ThemeProvider>

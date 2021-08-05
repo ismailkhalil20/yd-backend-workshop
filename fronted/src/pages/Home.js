@@ -1,5 +1,6 @@
 import { Grid, makeStyles, TextField } from '@material-ui/core';
 import homePageImage from '../assets/imgs/university.png';
+import UniversityPaper from '../components/UniversityPaper';
 
 const useStyles = makeStyles({
   gridMargin: {
@@ -15,6 +16,12 @@ const useStyles = makeStyles({
     width: '100%',
     maxWidth: 600,
     marginTop: 10,
+  },
+
+  ulStyles: {
+    width: '100%',
+    maxWidth: 600,
+    listStyle: 'none',
   },
 });
 
@@ -39,6 +46,11 @@ const Home = () => {
         type="search"
         label="Choose a city"
       />
+      <ul className={classes.ulStyles}>
+        <UniversityPaper name="Harvard" city="New York" />
+        <UniversityPaper name="Harvard" city="New York" />
+        <UniversityPaper name="Harvard" city="New York" />
+      </ul>
     </Grid>
   );
 };
