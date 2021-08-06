@@ -13,10 +13,11 @@ import {
   IconButton,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import logoPhoto from '../assets/imgs/logo.png';
 import { Link, NavLink } from 'react-router-dom';
 import { useState } from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
+
+import logoPhoto from '../assets/imgs/logo.png';
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -1,6 +1,7 @@
 import { Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
-import universityPic from '../assets/imgs/universitypaper.jpg';
 import PropTypes from 'prop-types';
+
+import universityPic from '../assets/imgs/universitypaper.jpg';
 
 const useStyles = makeStyles({
   liStyles: {

@@ -1,8 +1,4 @@
 import { useState } from 'react';
-import Nav from './components/Nav';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import Home from './pages/Home';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {
   Container,
@@ -10,10 +6,16 @@ import {
   CssBaseline,
   ThemeProvider,
 } from '@material-ui/core';
+
 import MemberProtectedRoute from './protectedRoutes/MemberProtectedRoute';
 import GuestProtectedRoute from './protectedRoutes/GuestProtectedRoute';
+
 import AddCity from './pages/AddCity';
 import AddUniversity from './pages/AddUniversity';
+import Nav from './components/Nav';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import Home from './pages/Home';
 
 function App() {
   const [user, setUser] = useState(null);
