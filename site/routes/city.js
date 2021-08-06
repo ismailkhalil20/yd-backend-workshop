@@ -1,9 +1,8 @@
 const express = require("express");
-const passport = require("passport");
 
 const router = express.Router();
 
-const addCityControllers = require("../controllers/addCity");
+const addCityControllers = require("../controllers/city");
 
 router.get("/add-city", addCityControllers.getAddCity);
 router.post("/add-city", addCityControllers.postAddCity);
