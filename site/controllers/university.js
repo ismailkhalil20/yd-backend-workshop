@@ -6,6 +6,8 @@ exports.postAddUniversity = async (req, res, next) => {
 
   const [city, created] = await City.findOrCreate({
     where: { cityName: cityName }
+  }).catch((err) => {
+    res.status(500).json(err)
   })
   city.createUniversity({ universityName })
   
