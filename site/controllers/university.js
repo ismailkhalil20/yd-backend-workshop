@@ -23,5 +23,5 @@ exports.getUniversities = (req, res, next) => {
   City.findOne({ where: { cityName } })
     .then((city) => city.getUniversities())
     .then((result) => res.json(result))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json(err));
 };
