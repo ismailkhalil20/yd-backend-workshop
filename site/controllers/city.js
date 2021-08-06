@@ -3,7 +3,7 @@ const City = require("../models/city");
 exports.getCity = async (req, res, next) => {
   const city = await City.findAll();
   console.log(req.city);
-  res.send(city);
+  res.json(city);
 };
 
 exports.getAddCity = (req, res, next) => {
@@ -14,7 +14,7 @@ exports.getAddCity = (req, res, next) => {
 exports.postAddCity = async (req, res, next) => {
     console.log(req.body);
     const cityName = req.body.cityName;
-    const city = new City ({cityId, cityName})
+    const city = City.build({ cityName });
     try {
       await city.save();
       res.json(city);
