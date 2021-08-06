@@ -23,5 +23,11 @@ exports.postAddUniversity = (req, res, next) => {
     })
     .then((results) => res.json("University is created succesfully"))
     .catch((err) => console.log(err));
-
   };
+
+exports.getUniversities = (req, res, next) => {
+  City.findOne({ where: { id: req.cityName } })
+    .then((city) => city.getUniversity())
+    .then((result) => res.send(result))
+    .catch((err) => console.log(err));
+};
