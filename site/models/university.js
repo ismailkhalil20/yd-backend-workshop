@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../util/database");
 
 const University = db.define(
-  "University",
+  "Universities",
   {
     // Model attributes are defined here
     id: {
