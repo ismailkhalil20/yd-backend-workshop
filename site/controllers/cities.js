@@ -1,7 +1,7 @@
-const User = require("../models/city");
+const City = require("../models/city");
 
 exports.getCities = async (req, res, next) => {
-  const cities = await User.findAll();
+  const cities = await City.findAll();
   console.log(req.city);
-  res.send(cities);
+  res.json(cities);
 };

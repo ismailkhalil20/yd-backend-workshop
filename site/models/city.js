@@ -1,7 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../util/database");
-const bcrypt = require("bcrypt");
-const { model } = require("../util/database");
 
 const City = db.define(
   "City",
