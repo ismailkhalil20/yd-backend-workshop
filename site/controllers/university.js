@@ -17,9 +17,11 @@ exports.postAddUniversity = async (req, res, next) => {
 
   };
 
-exports.getAddUniversity = (req, res, next) => {
-  City.findOne({ where: { id: req.body.cityName } })
-    .then((city) => city.getUniversity())
+exports.getUniversities = (req, res, next) => {
+  const cityName = req.body.city
+  console.log(cityName)
+  City.findOne({ where: { cityName } })
+    .then((city) => city.getUniversities())
     .then((result) => res.json(result))
     .catch((err) => console.log(err));
 };

@@ -4,7 +4,7 @@ const router = express.Router();
 
 const addUniversityControllers = require("../controllers/University");
 
-router.get("/add-university", addUniversityControllers.getAddUniversity);
+router.post("/get-university", addUniversityControllers.getUniversities);
 router.post("/add-university", addUniversityControllers.postAddUniversity);
 
 module.exports = router;
