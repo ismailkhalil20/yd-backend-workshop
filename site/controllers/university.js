@@ -1,8 +1,8 @@
 const City = require('../models/city');
 
 exports.postAddUniversity = (req, res, next) => {
-  const cityName = req.city;
-  const universityName = req.universityName
+  const cityName = req.body.city;
+  const universityName = req.body.universityName
 
   City.findOne({ where: { cityName: cityName  } })
     .then((city) => {
@@ -23,5 +23,11 @@ exports.postAddUniversity = (req, res, next) => {
     })
     .then((results) => res.json("University is created succesfully"))
     .catch((err) => console.log(err));
-
   };
+
+exports.getUniversities = (req, res, next) => {
+  City.findOne({ where: { id: req.body.cityName } })
+    .then((city) => city.getUniversity())
+    .then((result) => res.send(result))
+    .catch((err) => console.log(err));
+};
