@@ -6,6 +6,6 @@ const addFavoriteUniversityControllers = require("../controllers/favoriteUnivers
 
 router.get("/get-favoriteUniversity", addFavoriteUniversityControllers.getFavoriteUniversity);
 router.post("/add-favoriteUniversity", isAuth, addFavoriteUniversityControllers.postAddFavoriteUniversity);
-router.delete("/delete-favoriteUniversity", isAuth, addFavoriteUniversityControllers.postDeleteFavoriteUniversity);
+router.delete("/delete-favoriteUniversity", isAuth, addFavoriteUniversityControllers.deleteFavoriteUniversity);
 
 module.exports = router;
