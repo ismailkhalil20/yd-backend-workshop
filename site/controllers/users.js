@@ -1,5 +1,5 @@
-const User = require("../models/user");
-const jwt = require("jsonwebtoken");
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
 
 exports.getUsers = async (req, res, next) => {
   const users = await User.findAll();
@@ -7,7 +7,7 @@ exports.getUsers = async (req, res, next) => {
   res.send(users);
 };
 exports.getAddUser = (req, res, next) => {
-  res.render("add-user.ejs");
+  res.render('add-user.ejs');
 };
 // exports.postAddUser = (req, res, next) => {
 //   console.log(req.body);
@@ -28,7 +28,7 @@ exports.postSignUp = async (req, res, next) => {
   const user = User.build({ email, password, firstName, lastName });
   try {
     await user.save();
-    res.send(user);
+    res.json(user);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -41,8 +41,8 @@ exports.postSignIn = async (req, res, next) => {
       email: req.user.email,
       userId: req.user.id.toString(),
     },
-    "somesupersecretsecret",
-    { expiresIn: "1h" }
+    'somesupersecretsecret',
+    { expiresIn: '1h' },
   );
   res.status(200).json({
     token: token,
