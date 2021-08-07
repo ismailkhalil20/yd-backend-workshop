@@ -19,6 +19,7 @@ import Home from './pages/Home';
 
 function App() {
   const [user, setUser] = useState({});
+  console.log(user);
   const [existingUser, setExistingUser] = useState(false);
 
   const theme = createTheme({
@@ -49,6 +50,7 @@ function App() {
             exact
             component={SignIn}
             handleFetch={setUser}
+            persistUser={setExistingUser}
             path="/sign-in"
           />
           <MemberProtectedRoute

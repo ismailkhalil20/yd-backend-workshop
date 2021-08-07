@@ -8,6 +8,7 @@ import {
   Grid,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -15,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SignIn = ({ handleFetch }) => {
+const SignIn = ({ handleFetch, persistUser }) => {
   const classes = useStyles();
 
   const [user, setUser] = useState({
@@ -29,28 +30,44 @@ const SignIn = ({ handleFetch }) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSingIn = async e => {
+  // const handleSingIn = async e => {
+  //   e.preventDefault();
+  //   const settings = {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(user),
+  //   };
+  //   try {
+  //     const fetchResponse = await fetch(
+  //       `http://localhost:3001/sign-in`,
+  //       settings,
+  //     );
+  //     const data = await fetchResponse.json();
+  //     handleFetch(data);
+  //     history.push('/');
+  //     return data;
+  //   } catch (e) {
+  //     return e;
+  //   }
+  // };
+
+  const handleSubmit = e => {
     e.preventDefault();
-    const settings = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    };
-    try {
-      const fetchResponse = await fetch(
-        `http://localhost:3001/sign-in`,
-        settings,
-      );
-      const data = await fetchResponse.json();
-      handleFetch(data);
-      history.push('/');
-      return data;
-    } catch (e) {
-      return e;
-    }
+
+    axios
+      .post('http://localhost:3001/sign-in', {
+        email: user.email,
+        password: user.password,
+      })
+      .then(({ data }) => {
+        handleFetch(data);
+        persistUser(true);
+        history.push('/');
+      })
+      .catch(err => console.log(err));
   };
 
   return (
@@ -59,7 +76,7 @@ const SignIn = ({ handleFetch }) => {
         Sign In
       </Typography>
       <form
-        onSubmit={handleSingIn}
+        onSubmit={handleSubmit}
         className={classes.root}
         noValidate
         autoComplete="off"
