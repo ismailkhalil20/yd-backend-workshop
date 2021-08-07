@@ -21,11 +21,16 @@ const useStyles = makeStyles({
   },
 
   innerGridWidth: {
-    maxWidth: '35%',
+    maxWidth: '70%',
+  },
+
+  typographyDiv: {
+    marginLeft: 15,
   },
 
   h2Size: {
-    fontSize: 30,
+    fontSize: 20,
+    fontWeight: 700,
   },
 });
 
@@ -35,12 +40,7 @@ const UniversityPaper = ({ name, city }) => {
   return (
     <Paper component="li" className={classes.liStyles}>
       <Grid container justifyContent="space-between" alignItems="center">
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="space-evenly"
-          className={classes.innerGridWidth}
-        >
+        <Grid container alignItems="center" className={classes.innerGridWidth}>
           <div className={classes.imgDiv}>
             <img
               className={classes.imgStyles}
@@ -48,7 +48,7 @@ const UniversityPaper = ({ name, city }) => {
               alt="universityPic"
             />
           </div>
-          <div>
+          <div className={classes.typographyDiv}>
             <Typography className={classes.h2Size} variant="h2">
               {name}
             </Typography>
