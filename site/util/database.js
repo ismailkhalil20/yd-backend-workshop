@@ -9,9 +9,9 @@
 
 // module.exports = pool.promise();
 
-const { Sequelize } = require("sequelize");
+const { Sequelize } = require('sequelize');
 
-module.exports = new Sequelize("yd-backend-workshop", "root", "checkpoint", {
-  host: "localhost",
-  dialect: "mysql",
+module.exports = new Sequelize('samer', 'root', 'loveMarwa96', {
+  host: 'localhost',
+  dialect: 'mysql',
 });
