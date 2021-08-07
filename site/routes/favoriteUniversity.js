@@ -1,11 +1,12 @@
 const express = require("express");
+const isAuth = require("../middleware/is-auth");
 
 const router = express.Router();
 
-const addFavoriteUniversityControllers = require("../controllers/favoriteUniversity");
+const favoriteUniversitiesControllers = require("../controllers/favoriteUniversity");
 
-router.get("/get-favoriteUniversity", addFavoriteUniversityControllers.getFavoriteUniversity);
-router.post("/add-favoriteUniversity", isAuth, addFavoriteUniversityControllers.postAddFavoriteUniversity);
-router.delete("/delete-favoriteUniversity", isAuth, addFavoriteUniversityControllers.deleteFavoriteUniversity);
+router.get("/favoriteUniversity", isAuth, favoriteUniversitiesControllers.getFavoriteUniversity);
+router.post("/add-favoriteUniversity", isAuth, favoriteUniversitiesControllers.postAddFavoriteUniversity);
+router.delete("/delete-favoriteUniversity", isAuth, favoriteUniversitiesControllers.deleteFavoriteUniversity);
 
 module.exports = router;

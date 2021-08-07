@@ -19,5 +19,4 @@ const City = db.define(
     freezeTableName: true,
   }
 );
-
 module.exports = City;

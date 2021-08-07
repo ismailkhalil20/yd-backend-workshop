@@ -1,10 +1,14 @@
 const FavoriteUniversity = require("../models/favoriteUniversity");
+const User = require("../models/user");
 
 exports.getFavoriteUniversity = async (req, res, next) => {
-
-  const favoriteUniversity = await FavoriteUniversity.findAll();
-  console.log(req.favoriteUniversity);
-  res.json(favoriteUniversity);
+  try{
+  const user = await User.findOne({ where: { id: req.userId } })
+  const favoriteUniversity = await user.getFavoriteUniversities();
+  res.json(favoriteUniversity);}
+  catch (err){
+    res.status(500).json(err);
+  }
 };
 
 // exports.getAddCity = (req, res, next) => {
@@ -25,8 +29,8 @@ exports.postAddFavoriteUniversity = async (req, res, next) => {
   };
 
   exports.deleteFavoriteUniversity = async (req, res, next) => {
-    FavoriteUniversity.destroy({ where: { id: req.universityId } })
-    .then((results) => res.send("Hobby is created succesfully"))
+    FavoriteUniversity.destroy({ where: { universityName: req.universityName } })
+    .then((results) => res.send("Hobby is deleted succesfully"))
     .catch((err) => console.log(err));
 
   };
