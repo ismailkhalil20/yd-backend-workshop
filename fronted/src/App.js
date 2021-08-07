@@ -18,7 +18,7 @@ import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(false);
 
   const theme = createTheme({
     palette: {

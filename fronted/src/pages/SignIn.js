@@ -1,68 +1,120 @@
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import {
+  Typography,
+  Button,
+  TextField,
+  Container,
+  Grid,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-function SignIn({ handleFetch, handleToken }) {
+const useStyles = makeStyles(theme => ({
+  container: {
+    padding: theme.spacing(3),
+  },
+}));
+
+const SignIn = ({ handleFetch }) => {
+  const classes = useStyles();
+
   const [user, setUser] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
+
   const history = useHistory();
-  const handlChange = (e) => {
+
+  const handleChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  const handlSingIn = async (e) => {
+
+  const handleSingIn = async e => {
     e.preventDefault();
     const settings = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(user),
     };
     try {
       const fetchResponse = await fetch(
         `http://localhost:3001/sign-in`,
-        settings
+        settings,
       );
       const data = await fetchResponse.json();
-      // handleToken(data.token)
       handleFetch(data);
-      history.push("/");
+      history.push('/');
       return data;
     } catch (e) {
       return e;
     }
   };
+
   return (
-    <div>
-      <form onSubmit={handlSingIn}>
-        <div>
-          <label htmlFor="email">
-            Email
-            <input
-              type="email"
-              name="email"
-              required
-              value={user.email}
-              onChange={handlChange}
-            />
-          </label>
-          <label htmlFor="password">
-            Password
-            <input
-              type="password"
-              name="password"
-              required
-              value={user.password}
-              onChange={handlChange}
-            />
-          </label>
-        </div>
-        <button type="submit">Sign in</button>
+    <Container className={classes.container} maxWidth="xs">
+      <Typography variant="h3" gutterBottom>
+        Sign In
+      </Typography>
+      <form
+        onSubmit={handleSingIn}
+        className={classes.root}
+        noValidate
+        autoComplete="off"
+      >
+        <Grid
+          container
+          spacing={3}
+          align="center"
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid item xs={12}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  value={user.email}
+                  onChange={handleChange}
+                  id="outlined-basic"
+                  label="Your Email"
+                  variant="outlined"
+                  color="primary"
+                  fullWidth
+                  type="email"
+                  name="email"
+                  required
+                  autoFocus
+                ></TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  value={user.password}
+                  onChange={handleChange}
+                  id="outlined-password-input"
+                  label="Password"
+                  variant="outlined"
+                  color="primary"
+                  fullWidth
+                  type="password"
+                  name="password"
+                  required
+                  autoComplete="current-password"
+                ></TextField>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Button color="primary" variant="contained" type="submit">
+              sign in
+            </Button>
+          </Grid>
+        </Grid>
       </form>
-    </div>
+    </Container>
   );
-}
+};
 
 export default SignIn;
