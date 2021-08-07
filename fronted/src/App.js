@@ -15,6 +15,7 @@ import Nav from './components/Nav';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
+import FavoriteUniversities from './pages/FavoriteUniversities';
 
 function App() {
   const [user, setUser] = useState({});
@@ -72,6 +73,13 @@ function App() {
             exact
             component={AddUniversity}
             path="/add-university"
+          />
+          <GuestProtectedRoute
+            user={user}
+            existingUser={existingUser}
+            exact
+            component={FavoriteUniversities}
+            path="/favorite-universities"
           />
         </Router>
       </Container>

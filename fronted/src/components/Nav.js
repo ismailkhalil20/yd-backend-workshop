@@ -64,7 +64,7 @@ const ButtonAppBar = ({ user, setExistingUser, setUser }) => {
     if (text === 'Home') return '/';
     if (text === 'About') return '/about';
     if (text === 'Sign Up') return '/sign-up';
-    if (text === 'Add Favorite University') return '/add-favorite-university';
+    if (text === 'Favorite Universities') return '/favorite-universities';
     if (text === 'Add University') return '/add-university';
     return '/sign-in';
   };
@@ -75,12 +75,7 @@ const ButtonAppBar = ({ user, setExistingUser, setUser }) => {
   const drawer = () => {
     let linksArray;
     if (user) {
-      linksArray = [
-        'Home',
-        'About',
-        'Add University',
-        'Add Favorite University',
-      ];
+      linksArray = ['Home', 'About', 'Add University', 'Favorite Universities'];
     } else {
       linksArray = ['Home', 'About', 'Sign In', 'Sign Up'];
     }
@@ -154,19 +149,19 @@ const ButtonAppBar = ({ user, setExistingUser, setUser }) => {
                     <>
                       <NavLink
                         className={classes.link}
+                        to="/favorite-universities"
+                        exact
+                        activeClassName={classes.activeLink}
+                      >
+                        Favorite Universities
+                      </NavLink>
+                      <NavLink
+                        className={classes.link}
                         to="/add-university"
                         exact
                         activeClassName={classes.activeLink}
                       >
                         Add University
-                      </NavLink>
-                      <NavLink
-                        className={classes.link}
-                        to="/add-city"
-                        exact
-                        activeClassName={classes.activeLink}
-                      >
-                        Add Favorite University
                       </NavLink>
                       <Link to="#" className={classes.link}>
                         <Button
