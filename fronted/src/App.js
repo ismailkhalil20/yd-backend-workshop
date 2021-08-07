@@ -10,7 +10,6 @@ import {
 import MemberProtectedRoute from './protectedRoutes/MemberProtectedRoute';
 import GuestProtectedRoute from './protectedRoutes/GuestProtectedRoute';
 
-import AddCity from './pages/AddCity';
 import AddUniversity from './pages/AddUniversity';
 import Nav from './components/Nav';
 import SignIn from './pages/SignIn';
@@ -48,7 +47,7 @@ function App() {
             />
           </Route>
           <Route exact path="/">
-            <Home />
+            <Home user={user} />
           </Route>
           <MemberProtectedRoute
             user={user}
@@ -66,13 +65,6 @@ function App() {
             component={SignUp}
             handleFetch={setUser}
             path="/sign-up"
-          />
-          <GuestProtectedRoute
-            user={user}
-            existingUser={existingUser}
-            exact
-            component={AddCity}
-            path="/add-city"
           />
           <GuestProtectedRoute
             user={user}

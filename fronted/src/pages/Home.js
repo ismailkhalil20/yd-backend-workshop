@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Home = () => {
+const Home = ({ user }) => {
   const classes = useStyles();
   const [city, setCity] = useState('');
   const [universities, setUniversities] = useState([]);
@@ -81,6 +81,7 @@ const Home = () => {
             key={university.id}
             name={university.universityName}
             city={city}
+            user={user}
           />
         ))}
       </ul>

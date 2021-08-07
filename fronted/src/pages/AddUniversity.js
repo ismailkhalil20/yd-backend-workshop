@@ -1,27 +1,27 @@
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Typography,
   Button,
   TextField,
   Container,
   Grid,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   container: {
     padding: theme.spacing(3),
   },
   form: {
-    width: "100%",
+    width: '100%',
     marginTop: theme.spacing(3),
   },
 
@@ -30,34 +30,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddUniversity = () => {
+const AddUniversity = ({ user }) => {
   const classes = useStyles();
 
   const [university, setUniversity] = useState({
-    universityName: "",
-    city: "",
+    name: '',
+    city: '',
   });
 
-  let history = useHistory();
+  const history = useHistory();
 
-  const handleChange = (e) => {
+  const handleChange = e => {
+    console.log(e);
     setUniversity({ ...university, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:3001/add-university", {
-        universityName: university.name,
-        city: university.city,
-      });
+      await axios.post(
+        'http://localhost:3001/add-university',
+        {
+          university: university.name,
+          city: university.city,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        },
+      );
 
-      history.push("/");
+      history.push('/');
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <Container component="main" className={classes.container} maxWidth="xs">
       <div className={classes.paper}>
@@ -78,15 +88,15 @@ const AddUniversity = () => {
             direction="column"
           >
             <TextField
-              name="university Name"
+              name="name"
               variant="outlined"
               required
               fullWidth
               id="universityName"
               color="primary"
-              label="university Name"
+              label="University Name"
               autoFocus
-              value={AddUniversity.name}
+              value={university.name}
               onChange={handleChange}
               className={classes.marginBottom15}
             />
@@ -95,14 +105,13 @@ const AddUniversity = () => {
               required
               fullWidth
               id="city"
-              label="city"
+              label="City Name"
               color="primary"
               name="city"
-              value={AddUniversity.city}
+              value={university.city}
               onChange={handleChange}
               className={classes.marginBottom15}
             />
-
             <Button
               className={classes.marginBottom15}
               color="primary"

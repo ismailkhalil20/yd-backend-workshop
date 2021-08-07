@@ -168,7 +168,7 @@ const ButtonAppBar = ({ user, setExistingUser, setUser }) => {
                       >
                         Add Favorite University
                       </NavLink>
-                      <Link className={classes.link}>
+                      <Link to="#" className={classes.link}>
                         <Button
                           color="secondary"
                           variant="contained"
