@@ -2,35 +2,42 @@ const FavoriteUniversity = require("../models/favoriteUniversity");
 const User = require("../models/user");
 
 exports.getFavoriteUniversity = async (req, res, next) => {
-  try{
-  const user = await User.findOne({ where: { id: req.userId } })
-  const favoriteUniversity = await user.getFavoriteUniversities();
-  res.json(favoriteUniversity);}
-  catch (err){
+  try {
+    const user = await User.findOne({ where: { id: req.userId } });
+    const favoriteUniversity = await user.getFavoriteUniversities();
+    res.json(favoriteUniversity);
+  } catch (err) {
     res.status(500).json(err);
   }
 };
 
-// exports.getAddCity = (req, res, next) => {
-//   res.render("addCity.jsx");
-//   //name of the file may vary//
-// };
-
 exports.postAddFavoriteUniversity = async (req, res, next) => {
-    console.log(req.body);
+  try {
+    const user = await User.findOne({ where: { id: req.userId } });
     const universityName = req.body.universityName;
-    const favoriteUniversity = FavoriteUniversity.build({ universityName });
-    try {
-      await favoriteUniversity.save();
-      res.json(favoriteUniversity);
-    } catch (err) {
-      res.status(400).send(err);
-    }
-  };
+    const newUniversity = await user.createFavoriteUniversity({
+      universityName,
+    });
+    res.json(newUniversity);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
-  exports.deleteFavoriteUniversity = async (req, res, next) => {
-    FavoriteUniversity.destroy({ where: { universityName: req.universityName } })
-    .then((results) => res.send("Hobby is deleted succesfully"))
-    .catch((err) => console.log(err));
-
-  };
+exports.deleteFavoriteUniversity = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ where: { id: req.userId } });
+    const university = await user.getFavoriteUniversities({
+      where: { id: req.body.universityId },
+    });
+    // const university = await FavoriteUniversity.findOne({
+    //   where: { id: req.body.universityId, user_id: req.userId },
+    // });
+    // await university.destroy();
+    const result = await user.removeFavoriteUniversity(university);
+    console.log(result);
+    res.status(204);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};

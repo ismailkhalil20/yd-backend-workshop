@@ -14,7 +14,6 @@ const cityRouter = require("./routes/city");
 const universityRouter = require("./routes/university");
 const favoriteUniversityRouter = require("./routes/favoriteUniversity.js");
 
-
 // Database
 const db = require("./util/database");
 const passport = require("passport");
@@ -71,10 +70,9 @@ app.use((req, res, next) => {
 
 app.use(hobbyRouter);
 app.use(userRouter);
-app.use(cityRouter)
+app.use(cityRouter);
 app.use(universityRouter);
 app.use(favoriteUniversityRouter);
-
 
 Hobby.belongsTo(User);
 User.hasMany(Hobby);
@@ -83,7 +81,7 @@ University.belongsTo(City);
 City.hasMany(University);
 
 FavoriteUniversity.belongsTo(User);
-User.hasMany(FavoriteUniversity);
+User.hasMany(FavoriteUniversity, { onDelete: "CASCADE" });
 
 db.sync()
   .then(() => {
