@@ -19,13 +19,15 @@ import Home from './pages/Home';
 
 function App() {
   const [user, setUser] = useState({});
-  console.log(user);
   const [existingUser, setExistingUser] = useState(false);
 
   const theme = createTheme({
     palette: {
       primary: {
         main: '#4A8D56',
+      },
+      secondary: {
+        main: '#ff7e0f',
       },
     },
     background: {
@@ -39,7 +41,11 @@ function App() {
       <Container className="App">
         <Router>
           <Route path="/">
-            <Nav user={existingUser} />
+            <Nav
+              user={existingUser}
+              setExistingUser={setExistingUser}
+              setUser={setUser}
+            />
           </Route>
           <Route exact path="/">
             <Home />
