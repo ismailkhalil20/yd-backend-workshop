@@ -24,20 +24,19 @@ exports.postAddFavoriteUniversity = async (req, res, next) => {
   }
 };
 
-exports.deleteFavoriteUniversity = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ where: { id: req.userId } });
-    const university = await user.getFavoriteUniversities({
-      where: { id: req.body.universityId },
-    });
-    // const university = await FavoriteUniversity.findOne({
-    //   where: { id: req.body.universityId, user_id: req.userId },
-    // });
-    // await university.destroy();
-    const result = await user.removeFavoriteUniversity(university);
-    console.log(result);
-    res.status(204);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+exports.deleteFavoriteUniversity = (req, res, next) => {
+  User.findOne({ where: { id: req.userId } })
+    .then((user) => {
+      user
+        .getFavoriteUniversities({
+          where: { id: req.body.universityId },
+        })
+        .then((university) => {
+          const result = user.removeFavoriteUniversity(university);
+          console.log(result);
+          res.status(204);
+        });
+    })
+    .then(() => res.send("University is deleted succesfully"))
+    .catch((err) => res.status(500).json(err));
 };
