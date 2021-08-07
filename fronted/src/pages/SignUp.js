@@ -1,29 +1,29 @@
-import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Typography,
   Button,
   TextField,
   Container,
   Grid,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import PropTypes from 'prop-types';
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import PropTypes from "prop-types";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   container: {
     padding: theme.spacing(3),
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
 
@@ -36,23 +36,23 @@ function SignUp({ handleFetch }) {
   const classes = useStyles();
 
   const [user, setUser] = useState({
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: '',
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
   });
 
   let history = useHistory();
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const result = await axios.post('http://localhost:3001/sign-up', {
+      const result = await axios.post("http://localhost:3001/sign-up", {
         email: user.email,
         password: user.password,
         firstName: user.firstName,
@@ -60,7 +60,7 @@ function SignUp({ handleFetch }) {
       });
 
       handleFetch(result);
-      history.push('/sign-in');
+      history.push("/sign-in");
     } catch (error) {
       console.log(error);
     }
@@ -154,7 +154,7 @@ function SignUp({ handleFetch }) {
               align="center"
               className={classes.marginBottom15}
             >
-              Already have an account?{' '}
+              Already have an account?{" "}
               <Link to="/sign-in" variant="body2">
                 Sign In
               </Link>
