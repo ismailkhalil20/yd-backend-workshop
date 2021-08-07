@@ -21,7 +21,10 @@ exports.postAddUniversity = async (req, res, next) => {
 exports.getUniversities = (req, res) => {
   const cityName = req.params.city;
   City.findOne({ where: { cityName } })
-    .then(city => city.getUniversities())
+    .then(city => {
+      if (!city) return [];
+      city.getUniversities();
+    })
     .then(result => res.json(result))
     .catch(err => res.status(500).json(err));
 };
