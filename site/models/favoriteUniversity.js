@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../util/database");
 
-const City = db.define(
-  "City",
+const favoriteUniversity = db.define(
+  "favoriteUniversities",
   {
     // Model attributes are defined here
     id: {
@@ -10,7 +10,7 @@ const City = db.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    cityName: {
+    universityName: {
       type: DataTypes.STRING,
       allowNull: false,
     }
@@ -19,4 +19,5 @@ const City = db.define(
     freezeTableName: true,
   }
 );
-module.exports = City;
+
+module.exports = favoriteUniversity;
