@@ -1,6 +1,6 @@
 const City = require('../models/city');
 
-exports.postAddUniversity = async (req, res, next) => {
+exports.postAddUniversity = async (req, res) => {
   const cityName = req.body.city;
   const universityName = req.body.university;
 
@@ -23,7 +23,7 @@ exports.getUniversities = (req, res) => {
   City.findOne({ where: { cityName } })
     .then(city => {
       if (!city) return [];
-      city.getUniversities();
+      return city.getUniversities();
     })
     .then(result => res.json(result))
     .catch(err => res.status(500).json(err));
