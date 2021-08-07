@@ -1,16 +1,26 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import {Typography, Button, TextField, Container, Grid} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: theme.spacing(3)
+  }
+}));
+
 
 function SignIn({ handleFetch, handleToken }) {
+  const classes = useStyles();
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
   const history = useHistory();
-  const handlChange = (e) => {
+  const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  const handlSingIn = async (e) => {
+  const handleSingIn = async (e) => {
     e.preventDefault();
     const settings = {
       method: "POST",
@@ -35,34 +45,69 @@ function SignIn({ handleFetch, handleToken }) {
     }
   };
   return (
-    <div>
-      <form onSubmit={handlSingIn}>
-        <div>
-          <label htmlFor="email">
-            Email
-            <input
-              type="email"
-              name="email"
-              required
-              value={user.email}
-              onChange={handlChange}
-            />
-          </label>
-          <label htmlFor="password">
-            Password
-            <input
-              type="password"
-              name="password"
-              required
-              value={user.password}
-              onChange={handlChange}
-            />
-          </label>
-        </div>
-        <button type="submit">Sign in</button>
-      </form>
-    </div>
-  );
+        <Container className={classes.container} maxWidth="xs">
+        <Typography variant="h3" gutterBottom>
+          Sign In
+        </Typography>
+        <form
+        onSubmit={handleSingIn}
+          // onSubmit={handleSubmit(onSubmit)}
+          className={classes.root}
+          noValidate
+          autoComplete="off"
+        >
+          <Grid
+            container
+            spacing={3}
+            align="center"
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item xs={12}>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                  value={user.email}
+                  onChange={handleChange}
+                    id="outlined-basic"
+                    label="Your Email"
+                    variant="outlined"
+                    color="primary"
+                    fullWidth
+                    // ref={register}
+                    type="email"
+                    name="email"
+                    Required
+                  ></TextField>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={user.password}
+                    onChange={handleChange}
+                    // ref={register}
+                    id="outlined-password-input"
+                    label="Password"
+                    variant="outlined"
+                    color="primary"
+                    fullWidth
+                    type="password"
+                    name="password"
+                    Required
+                    autoComplete="current-password"
+                  ></TextField>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Button color="primary" variant="contained" type="submit">
+                sign in
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Container>
+    );
 }
 
 export default SignIn;
