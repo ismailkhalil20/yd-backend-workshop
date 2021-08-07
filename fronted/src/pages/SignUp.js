@@ -1,79 +1,95 @@
-import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import {Typography, Button, TextField, Container, Grid} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import {
+  Typography,
+  Button,
+  TextField,
+  Container,
+  Grid,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   container: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+
+  marginBottom15: {
+    marginBottom: 15,
+  },
 }));
 
-function SignUn({ handleFetch }) {
+function SignUp({ handleFetch }) {
   const classes = useStyles();
+
   const [user, setUser] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
   });
+
   let history = useHistory();
-  const handlChange = (e) => {
+
+  const handleChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  const handlSingUn = async (e) => {
+
+  const handleSignUp = async e => {
     e.preventDefault();
     const settings = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(user),
     };
     try {
       const fetchResponse = await fetch(
         `http://localhost:3001/sign-up`,
-        settings
+        settings,
       );
       const data = await fetchResponse.json();
       console.log(data);
       handleFetch(data.user);
-      history.push("/");
+      history.push('/');
       return data;
     } catch (e) {
       return e;
     }
   };
+
   return (
     <Container component="main" className={classes.container} maxWidth="xs">
-    <CssBaseline />
-    <div className={classes.paper}>
-      <Typography variant="h3" gutterBottom>
-        Sign Up
-      </Typography>
-      <form
-        onSubmit={handlSingUn}
-        className={classes.form}
-        noValidate
-        autoComplete="off"
-      >
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+      <div className={classes.paper}>
+        <Typography variant="h3" gutterBottom>
+          Sign Up
+        </Typography>
+        <form
+          onSubmit={handleSignUp}
+          className={classes.form}
+          noValidate
+          autoComplete="off"
+        >
+          <Grid
+            container
+            spacing={3}
+            alignItems="center"
+            justifyContent="center"
+            direction="column"
+          >
             <TextField
               autoComplete="fname"
               name="firstName"
@@ -85,10 +101,9 @@ function SignUn({ handleFetch }) {
               label="First Name"
               autoFocus
               value={user.firstName}
-              onChange={handlChange}
+              onChange={handleChange}
+              className={classes.marginBottom15}
             />
-          </Grid>
-          <Grid item xs={12} sm={6}>
             <TextField
               variant="outlined"
               required
@@ -99,61 +114,61 @@ function SignUn({ handleFetch }) {
               name="lastName"
               autoComplete="lname"
               value={user.lastName}
-              onChange={handlChange}
+              onChange={handleChange}
+              className={classes.marginBottom15}
             />
-            <Grid item xs={12}>
-              <TextField
-                id="outlined-basic"
-                label="Your Email"
-                variant="outlined"
-                color="primary"
-                fullWidth
-                // ref={register}
-                type="email"
-                name="email"
-                Required
-                value={user.email}
-                onChange={handlChange}
-              ></TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                // ref={register}
-                id="outlined-password-input"
-                label="Password"
-                variant="outlined"
-                color="primary"
-                fullWidth
-                type="password"
-                name="password"
-                Required
-                autoComplete="current-password"
-                value={user.password}
-                onChange={handlChange}
-              ></TextField>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
+            <TextField
+              id="outlined-basic"
+              label="Your Email"
+              variant="outlined"
+              color="primary"
+              fullWidth
+              // ref={register}
+              type="email"
+              name="email"
+              required
+              value={user.email}
+              onChange={handleChange}
+              className={classes.marginBottom15}
+            ></TextField>
+            <TextField
+              // ref={register}
+              id="outlined-password-input"
+              label="Password"
+              variant="outlined"
+              color="primary"
+              fullWidth
+              type="password"
+              name="password"
+              required
+              autoComplete="current-password"
+              value={user.password}
+              onChange={handleChange}
+              className={classes.marginBottom15}
+            ></TextField>
             <Button
-              className={classes.submit}
+              className={classes.marginBottom15}
               color="primary"
               variant="contained"
               type="submit"
             >
-              sign in
+              sign Up
             </Button>
+            <Typography
+              variant="body2"
+              align="center"
+              className={classes.marginBottom15}
+            >
+              Already have an account?{' '}
+              <Link to="/sign-in" variant="body2">
+                Sign In
+              </Link>
+            </Typography>
           </Grid>
-        </Grid>
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            
-            Already have an account? <Link href="/sign-in" variant="body2">Sign in</Link>
-          </Grid>
-        </Grid>
-      </form>
-    </div>
-  </Container>
+        </form>
+      </div>
+    </Container>
   );
 }
 
-export default SignUn;
+export default SignUp;
