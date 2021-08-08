@@ -32,8 +32,7 @@ exports.deleteFavoriteUniversity = (req, res, next) => {
           where: { id: req.body.universityId },
         })
         .then((university) => {
-          const result = user.removeFavoriteUniversity(university);
-          console.log(result);
+          user.removeFavoriteUniversity(university);
           res.status(204);
         });
     })
