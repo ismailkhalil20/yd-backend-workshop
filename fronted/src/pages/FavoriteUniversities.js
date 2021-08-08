@@ -44,9 +44,32 @@ const FavoriteUniversities = ({ user }) => {
   const [universities, setUniversities] = useState([]);
   const classes = useStyles();
 
-  // const handleDelete = () => {
-
-  // }
+  const handleDelete = universityId => {
+    axios
+      .delete('http://localhost:3001/favoriteUniversity', {
+        data: {
+          universityId,
+        },
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .then(({ status }) => {
+        if (status === 200) {
+          axios
+            .get('http://localhost:3001/favoriteUniversity', {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            })
+            .then(({ data }) => {
+              setUniversities(data);
+            })
+            .catch(err => console.log(err));
+        }
+      })
+      .catch(err => console.log(err));
+  };
 
   useEffect(() => {
     axios
@@ -55,7 +78,10 @@ const FavoriteUniversities = ({ user }) => {
           Authorization: `Bearer ${user.token}`,
         },
       })
-      .then(({ data }) => setUniversities(data))
+      .then(({ data }) => {
+        console.log(data);
+        setUniversities(data);
+      })
       .catch(err => console.log(err));
   }, [user.token]);
 
@@ -63,7 +89,11 @@ const FavoriteUniversities = ({ user }) => {
     <Grid>
       <ul className={classes.ulStyles}>
         {universities.map(university => (
-          <Paper component="li" className={classes.liStyles}>
+          <Paper
+            key={university.id}
+            component="li"
+            className={classes.liStyles}
+          >
             <Grid container justifyContent="space-between" alignItems="center">
               <Grid
                 container
@@ -83,7 +113,9 @@ const FavoriteUniversities = ({ user }) => {
                   </Typography>
                 </div>
               </Grid>
-              {/* <Button onClick={handleDelete}>Delete From Favorites</Button> */}
+              <Button onClick={() => handleDelete(university.id)}>
+                Delete From Favorites
+              </Button>
             </Grid>
           </Paper>
         ))}
