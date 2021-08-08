@@ -1,30 +1,31 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const port = 3001;
 
-const session = require('express-session');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const session = require("express-session");
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 // const path = require("path");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
-const userRouter = require('./routes/users');
-const hobbyRouter = require('./routes/hobbies');
-const cityRouter = require('./routes/city');
-const universityRouter = require('./routes/university');
-const favoriteUniversityRouter = require('./routes/favoriteUniversity.js');
+const userRouter = require("./routes/users");
+const hobbyRouter = require("./routes/hobbies");
+const cityRouter = require("./routes/city");
+const universityRouter = require("./routes/university");
+const favoriteUniversityRouter = require("./routes/favoriteUniversity.js");
+const aboutRouter = require("./routes/about.js");
 
 // Database
-const db = require('./util/database');
-const passport = require('passport');
+const db = require("./util/database");
+const passport = require("passport");
 
-const User = require('./models/user');
-const Hobby = require('./models/hobby');
-const City = require('./models/city');
-const University = require('./models/university');
-const FavoriteUniversity = require('./models/favoriteUniversity');
+const User = require("./models/user");
+const Hobby = require("./models/hobby");
+const City = require("./models/city");
+const University = require("./models/university");
+const FavoriteUniversity = require("./models/favoriteUniversity");
 
-const initPassport = require('./util/passport-config');
+const initPassport = require("./util/passport-config");
 initPassport(passport);
 
 // app.set("view engine", "ejs");
@@ -37,22 +38,22 @@ app.use(passport.initialize());
 
 app.use(
   session({
-    secret: 'MySecret',
+    secret: "MySecret",
     store: new SequelizeStore({
       db: db,
     }),
     resave: false, // we support the touch method so per the express-session docs this should be set to false
     proxy: true, // if you do SSL outside of node.
-  }),
+  })
 );
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
-    'Access-Control-Allow-Methods',
-    'OPTIONS, GET, POST, PUT, PATCH, DELETE',
+    "Access-Control-Allow-Methods",
+    "OPTIONS, GET, POST, PUT, PATCH, DELETE"
   );
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
 });
 
@@ -73,6 +74,7 @@ app.use(userRouter);
 app.use(cityRouter);
 app.use(universityRouter);
 app.use(favoriteUniversityRouter);
+app.use(aboutRouter);
 
 Hobby.belongsTo(User);
 User.hasMany(Hobby);
@@ -81,7 +83,7 @@ University.belongsTo(City);
 City.hasMany(University);
 
 FavoriteUniversity.belongsTo(User);
-User.hasMany(FavoriteUniversity, { onDelete: 'CASCADE' });
+User.hasMany(FavoriteUniversity, { onDelete: "CASCADE" });
 
 db.sync()
   .then(() => {
@@ -89,4 +91,4 @@ db.sync()
       console.log(`Example app listening at http://localhost:${port}`);
     });
   })
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
