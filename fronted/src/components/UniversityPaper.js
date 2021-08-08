@@ -1,5 +1,7 @@
 import { Button, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import axios from 'axios';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import universityPic from '../assets/imgs/universitypaper.jpg';
 
@@ -21,26 +23,45 @@ const useStyles = makeStyles({
   },
 
   innerGridWidth: {
-    maxWidth: '35%',
+    maxWidth: '70%',
+  },
+
+  typographyDiv: {
+    marginLeft: 15,
   },
 
   h2Size: {
-    fontSize: 30,
+    fontSize: 20,
+    fontWeight: 700,
   },
 });
 
-const UniversityPaper = ({ name, city }) => {
+const UniversityPaper = ({ name, city, user }) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const addToFavorite = () => {
+    if (!user.token) {
+      history.push('/sign-in');
+    } else {
+      axios.post(
+        'http://localhost:3001/favoriteUniversity',
+        {
+          universityName: name,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        },
+      );
+    }
+  };
 
   return (
     <Paper component="li" className={classes.liStyles}>
       <Grid container justifyContent="space-between" alignItems="center">
-        <Grid
-          container
-          alignItems="center"
-          justifyContent="space-evenly"
-          className={classes.innerGridWidth}
-        >
+        <Grid container alignItems="center" className={classes.innerGridWidth}>
           <div className={classes.imgDiv}>
             <img
               className={classes.imgStyles}
@@ -48,14 +69,14 @@ const UniversityPaper = ({ name, city }) => {
               alt="universityPic"
             />
           </div>
-          <div>
+          <div className={classes.typographyDiv}>
             <Typography className={classes.h2Size} variant="h2">
               {name}
             </Typography>
             <Typography variant="body2">{city}</Typography>
           </div>
         </Grid>
-        <Button>Read More</Button>
+        <Button onClick={addToFavorite}>Add to favorite</Button>
       </Grid>
     </Paper>
   );

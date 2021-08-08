@@ -1,11 +1,11 @@
-const express = require("express");
-const isAuth = require("../middleware/is-auth");
+const express = require('express');
+const isAuth = require('../middleware/is-auth');
 
 const router = express.Router();
 
-const addUniversityControllers = require("../controllers/University");
+const universityControllers = require('../controllers/university.js');
 
-router.post("/get-university", addUniversityControllers.getUniversities);
-router.post("/add-university", isAuth, addUniversityControllers.postAddUniversity);
+router.get('/:city/get-university', universityControllers.getUniversities);
+router.post('/add-university', isAuth, universityControllers.postAddUniversity);
 
 module.exports = router;

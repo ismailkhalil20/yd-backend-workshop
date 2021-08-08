@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     maxHeight: 60,
   },
   linksContainer: {
-    width: 350,
+    minWidth: 500,
   },
   link: {
     textDecoration: 'none',
@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   },
   menuButton: {
     marginLeft: theme.spacing(2),
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'none',
     },
   },
@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ButtonAppBar = ({ user }) => {
+const ButtonAppBar = ({ user, setExistingUser, setUser }) => {
   const classes = useStyles();
 
   const theme = useTheme();
@@ -64,7 +64,7 @@ const ButtonAppBar = ({ user }) => {
     if (text === 'Home') return '/';
     if (text === 'About') return '/about';
     if (text === 'Sign Up') return '/sign-up';
-    if (text === 'Add City') return '/add-city';
+    if (text === 'Favorite Universities') return '/favorite-universities';
     if (text === 'Add University') return '/add-university';
     return '/sign-in';
   };
@@ -75,7 +75,7 @@ const ButtonAppBar = ({ user }) => {
   const drawer = () => {
     let linksArray;
     if (user) {
-      linksArray = ['Home', 'About', 'Add City', 'Add University'];
+      linksArray = ['Home', 'About', 'Add University', 'Favorite Universities'];
     } else {
       linksArray = ['Home', 'About', 'Sign In', 'Sign Up'];
     }
@@ -83,23 +83,30 @@ const ButtonAppBar = ({ user }) => {
       <div>
         <div className={classes.toolbar} />
         <List>
-          {linksArray.map(text => (
-            <NavLink
-              key={text}
-              exact
-              activeClassName={classes.activeLink}
-              className={classes.link}
-              to={properPath(text)}
-              onClick={handleDrawerToggle}
-            >
-              <ListItem button>
-                <ListItemText primary={text} />
-              </ListItem>
-            </NavLink>
-          ))}
+          {linksArray.map(text => {
+            return (
+              <NavLink
+                key={text}
+                exact
+                activeClassName={classes.activeLink}
+                className={classes.link}
+                to={properPath(text)}
+                onClick={handleDrawerToggle}
+              >
+                <ListItem button>
+                  <ListItemText primary={text} />
+                </ListItem>
+              </NavLink>
+            );
+          })}
         </List>
       </div>
     );
+  };
+
+  const handleLogOut = () => {
+    setExistingUser(false);
+    setUser({});
   };
 
   return (
@@ -115,7 +122,7 @@ const ButtonAppBar = ({ user }) => {
               />
             </Grid>
             <Grid item>
-              <Hidden xsDown>
+              <Hidden smDown>
                 <Grid
                   className={classes.linksContainer}
                   container
@@ -142,11 +149,11 @@ const ButtonAppBar = ({ user }) => {
                     <>
                       <NavLink
                         className={classes.link}
-                        to="/add-city"
+                        to="/favorite-universities"
                         exact
                         activeClassName={classes.activeLink}
                       >
-                        Add City
+                        Favorite Universities
                       </NavLink>
                       <NavLink
                         className={classes.link}
@@ -156,6 +163,15 @@ const ButtonAppBar = ({ user }) => {
                       >
                         Add University
                       </NavLink>
+                      <Link to="#" className={classes.link}>
+                        <Button
+                          color="secondary"
+                          variant="contained"
+                          onClick={handleLogOut}
+                        >
+                          Sign Out
+                        </Button>
+                      </Link>
                     </>
                   ) : (
                     <>
@@ -191,7 +207,7 @@ const ButtonAppBar = ({ user }) => {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
-        <Hidden smUp>
+        <Hidden mdUp>
           <Drawer
             container={container}
             variant="temporary"
@@ -215,6 +231,8 @@ const ButtonAppBar = ({ user }) => {
 
 ButtonAppBar.propTypes = {
   user: PropTypes.bool.isRequired,
+  setExistingUser: PropTypes.func.isRequired,
+  setUser: PropTypes.func.isRequired,
 };
 
 export default ButtonAppBar;

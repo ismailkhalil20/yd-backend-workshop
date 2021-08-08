@@ -1,5 +1,5 @@
-const FavoriteUniversity = require("../models/favoriteUniversity");
-const User = require("../models/user");
+const FavoriteUniversity = require('../models/favoriteUniversity');
+const User = require('../models/user');
 
 exports.getFavoriteUniversity = async (req, res, next) => {
   try {
@@ -26,16 +26,16 @@ exports.postAddFavoriteUniversity = async (req, res, next) => {
 
 exports.deleteFavoriteUniversity = (req, res, next) => {
   User.findOne({ where: { id: req.userId } })
-    .then((user) => {
+    .then(user => {
       user
         .getFavoriteUniversities({
           where: { id: req.body.universityId },
         })
-        .then((university) => {
+        .then(university => {
           user.removeFavoriteUniversity(university);
           res.status(204);
         });
     })
-    .then(() => res.send("University is deleted succesfully"))
-    .catch((err) => res.status(500).json(err));
+    .then(() => res.send('University is deleted succesfully'))
+    .catch(err => res.status(500).json(err));
 };

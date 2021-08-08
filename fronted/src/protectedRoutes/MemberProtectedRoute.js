@@ -1,19 +1,23 @@
 import { Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const MemberProtectedRoute = ({ user, component: Component, ...rest }) => (
+const MemberProtectedRoute = ({
+  existingUser,
+  component: Component,
+  ...rest
+}) => (
   <Route
     {...rest}
     render={({ location }) => {
-      if (user)
+      if (existingUser)
         return <Redirect to={{ pathname: '/' }} from={location.pathname} />;
-      return <Component />;
+      return <Component {...rest} />;
     }}
   />
 );
 
 MemberProtectedRoute.propTypes = {
-  user: PropTypes.bool.isRequired,
+  existingUser: PropTypes.bool.isRequired,
   component: PropTypes.func.isRequired,
 };
 
