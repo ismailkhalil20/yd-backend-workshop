@@ -81,7 +81,7 @@ University.belongsTo(City);
 City.hasMany(University);
 
 FavoriteUniversity.belongsTo(User);
-User.hasMany(FavoriteUniversity, { onDelete: "CASCADE" });
+User.hasMany(FavoriteUniversity);
 
 db.sync()
   .then(() => {
