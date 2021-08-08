@@ -1,21 +1,22 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { useState } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import {
   Container,
   unstable_createMuiStrictModeTheme as createTheme,
   CssBaseline,
   ThemeProvider,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import MemberProtectedRoute from './protectedRoutes/MemberProtectedRoute';
-import GuestProtectedRoute from './protectedRoutes/GuestProtectedRoute';
+import MemberProtectedRoute from "./protectedRoutes/MemberProtectedRoute";
+import GuestProtectedRoute from "./protectedRoutes/GuestProtectedRoute";
 
-import AddUniversity from './pages/AddUniversity';
-import Nav from './components/Nav';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import Home from './pages/Home';
-import FavoriteUniversities from './pages/FavoriteUniversities';
+import AddUniversity from "./pages/AddUniversity";
+import Nav from "./components/Nav";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import Home from "./pages/Home";
+import FavoriteUniversities from "./pages/FavoriteUniversities";
+import About from "./pages/About";
 
 function App() {
   const [user, setUser] = useState({});
@@ -24,14 +25,14 @@ function App() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: '#4A8D56',
+        main: "#4A8D56",
       },
       secondary: {
-        main: '#ff7e0f',
+        main: "#ff7e0f",
       },
     },
     background: {
-      default: '#E5E5E5',
+      default: "#E5E5E5",
     },
   });
 
@@ -49,6 +50,9 @@ function App() {
           </Route>
           <Route exact path="/">
             <Home user={user} />
+          </Route>
+          <Route exact path="/about">
+            <About />
           </Route>
           <MemberProtectedRoute
             user={user}
